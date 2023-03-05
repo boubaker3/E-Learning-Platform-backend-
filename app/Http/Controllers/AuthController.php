@@ -17,7 +17,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login','register' ] ]);
+        $this->middleware('auth:api', ['except' => ['login' ] ]);
     }
 
     /**
@@ -51,7 +51,7 @@ class AuthController extends Controller
    
         $user =new User(
                 [ 'fullname'=>$request->fullname,
-                'userid'=>"121258656",
+                'userid'=>$this->createUserId(),
                 'email'=>$request->email,
                 'password' => bcrypt($request->password),
                 "created_at"=>date("Y-m-d H:i:s"),
