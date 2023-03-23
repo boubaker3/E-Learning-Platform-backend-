@@ -40,6 +40,10 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
+           
+              
+                \App\Http\Middleware\VideoAcceptRangesMiddleware::class,
+          
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
@@ -54,6 +58,8 @@ class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $routeMiddleware = [
+       
+
         'jwt_verify' => \App\Http\Middleware\JwtMiddleware::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,

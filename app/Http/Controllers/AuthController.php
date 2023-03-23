@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Controller; 
 use App\Models\User;
 use Illuminate\Http\Request;
 use JWTAuth;
@@ -17,7 +17,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login' ] ]);
+        $this->middleware('auth:api', ['except' => ['login','register' ] ]);
     }
 
     /**
@@ -115,5 +115,22 @@ class AuthController extends Controller
             'user' => auth()->user()
 
         ]);
+    }
+ 
+    public function updateProfile(Request $request){
+        $usersModel=new User();
+        $credentials = request(['email', 'password']);
+
+        if (! $token = auth()->attempt($credentials)) {
+            return response()->json(["res"=>"incorrect_password"]);
+        }
+        $token = JWTAuth::fromUser(Auth::user());
+
+        $data=["fullname"=>$request->fullname,"password"=>bcrypt($request->newPassword),"description"=>$request->description,"facebook"=>$request->facebook
+        ,"instagram"=>$request->instagram,"twitter"=>$request->twitter,"remember_token"=>$token];
+        $usersModel->where("userid",$request->userid)->update($data);
+        $user=$usersModel->where("userid",$request->userid)->first();
+        return ["user"=>$user,"token"=>$token];  
+
     }
 }

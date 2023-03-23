@@ -18,8 +18,9 @@ class CreateCoursesTable extends Migration
             $table->string("userid");
             $table->string("courseid");
             $table->string("title");
-            $table->string("description");
+            $table->string("description",5000);
             $table->string("requirements");
+            $table->string("benefits",1500);
             $table->string("category");
             $table->string("price");
             $table->string("paid_or_free");
@@ -30,6 +31,7 @@ class CreateCoursesTable extends Migration
             $table->integer("threeStars")->default(0);
             $table->integer("fourStars")->default(0);
             $table->integer("fiveStars")->default(0);
+            $table->bigInteger("views")->default(0);
             $table->timestamps();
         });
     }
