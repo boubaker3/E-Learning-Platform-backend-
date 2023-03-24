@@ -61,7 +61,9 @@ return response()->json(["res"=>"succeed"]);
 
 
         function getFollowingCourses(Request $request){
-            $courses=DB::table("subscriptions")->where("subscriptions.followerid",$request->userid)
+            $perpage=10;
+        $skip=$request->page*$perpage-$perpage;
+           $courses=DB::table("subscriptions")->where("subscriptions.followerid",$request->userid)
                                 ->join("users","users.userid","=","subscriptions.followingid")
                                 ->join("courses","courses.userid","=","users.userid")
                                 ->select("courses.*","users.userid","users.fullname","users.photo" )

@@ -12,7 +12,7 @@ class WatchedController extends Controller
     public function addWatched(Request $request){
         $saves=new WatchedModel();
         $courses=new CoursesModel();
-        $Course=$courses->where("courseid",$request->courseid)->first();
+        $course=$courses->where("courseid",$request->courseid)->first();
         $courses->where("courseid",$request->courseid)->update(["views"=>$course->views+1]);
         $saves->insert([
                     "userid"=>$request->userid,

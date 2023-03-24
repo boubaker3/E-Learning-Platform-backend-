@@ -16,6 +16,7 @@ class CreatePurshasesTable extends Migration
         Schema::create('purshases', function (Blueprint $table) {
             $table->id();
             $table->string('purshaseid');
+            $table->string('sellerid');
             $table->string('userid');
             $table->string('courseid');
             $table->string('payerid');

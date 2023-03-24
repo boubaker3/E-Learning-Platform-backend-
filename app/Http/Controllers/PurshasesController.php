@@ -12,6 +12,7 @@ use PayPal\Api\PaymentExecution;
 use JWTAuth;
 use App\Models\PurshasesModel;
 use App\Models\CoursesModel;
+use Illuminate\Support\Facades\DB;
 
 class PurshasesController extends Controller
 {
@@ -77,6 +78,7 @@ class PurshasesController extends Controller
             if ($result->getState() === 'approved') {
                  $purshase->insert(["purshaseid"=>$this->createPurshaseId(),
                                     "userid"=>$request->userid,
+                                    "sellerid"=>$request->sellerid,
                                     "courseid"=>$request->courseid,
                                     "amount"=>$request->amount,
                                     "paymentid"=>$request->paymentid,
@@ -91,5 +93,24 @@ class PurshasesController extends Controller
         } catch (Exception $ex) {
             return response()->json(['error' => $ex->getMessage()]);
         }
+    }
+
+    public function showSellings(Request $request){
+        $perpage=10;
+        $skip=$request->page*$perpage-$perpage;
+        $yourSellings=DB::table("purshases")->where("purshases.sellerid",$request->userid)
+                              ->join("courses","courses.userid","=","purshases.sellerid")
+                              ->join("users","users.userid","=","purshases.userid")
+                             ->select("courses.*","users.userid","users.fullname","users.photo",'purshases.amount','purshases.created_at' )
+                             ->offset($skip)
+                              ->limit($perpage)
+                              ->get();
+    $totalSellings = DB::table('purshases')->where("purshases.sellerid",$request->userid)->limit(200)->count();
+    $amount = DB::table('purshases')->where("purshases.sellerid",$request->userid)
+    ->select(DB::raw('SUM(purshases.amount) as total_amount'))
+    ->get();
+    
+    return response()->json(["yourSellings"=>$yourSellings,
+    "totalSellings" => $totalSellings,"amount"=>$amount]);
     }
 }

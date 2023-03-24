@@ -37,8 +37,8 @@ class SavesController extends Controller
 
         ->select("courses.*","users.userid","users.fullname","users.photo" )
         ->offset($skip)
-                        ->limit($perpage)
-                        ->get();
+        ->limit($perpage)
+        ->get();
     $totalCourses = DB::table('saves')->where("saves.userid",$request->userid)->limit(200)->count();
                   
     return response()->json(["courses"=>$courses,

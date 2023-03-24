@@ -64,6 +64,7 @@ Route::middleware([ 'jwt_verify'
     Route::get("showWatched ",[WatchedController::class,"showWatched"]);
     Route::get("deleteCartItem ",[CartController::class,"deleteCartItem"]);
     Route::get("yourCourses ",[CoursesController::class,"getMyCourses"]);
+    Route::get("showSellings ",[PurshasesController::class,"showSellings"]);
     
     Route::post('logout',[AuthController::class,"logout"] );
     Route::post('refresh', [AuthController::class,"refresh"] );

@@ -16,18 +16,18 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
  
-        for($i=0;$i<20;$i++){
-         
-            DB::table('ratings')->insert(  
-                ['ratingid'=>uniqid(),
-                'courseid'=> '641714de6ebd7',
-                'senderid'=>uniqid(),
-                 'review' => "review",
-                'rating' => 5,
+        
+            DB::table('purshases')->insert(  
+                ['purshaseid'=>uniqid(),
+                'sellerid'=> '169058629814809',
+                'userid'=>"29207029759808",
+                 'courseid' => "52891353934675",
+                'amount' => 20,
+                'payerid' => uniqid(),
+                'paymentid' => uniqid(),
+
                 "created_at"=>date("Y-m-d H:i:s"),
                 "updated_at"=>date("Y-m-d H:i:s") ]);
-
-        }
-       
+     
     }
 }
